@@ -4,21 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd --exit-child --transpile-only --respawn src/main.ts"
+    "dev": "tsnd --exit-child --transpile-only --respawn src/main.ts",
+    "test": "tap run"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.1.0",
     "@fastify/jwt": "^7.2.1",
+    "@sinclair/typebox": "^0.31.17",
     "@typegoose/typegoose": "^11.5.0",
     "bcrypt": "^5.1.1",
-    "dotenv": "^16.3.1",
+    "env-schema": "^5.2.0",
     "fastify": "^4.23.2",
     "mongoose": "^7.5.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "pino-pretty": "^10.2.0",
+    "tap": "^18.4.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   }

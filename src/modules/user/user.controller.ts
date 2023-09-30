@@ -21,7 +21,7 @@ export async function registerHandler(
     };
 
     reply.code(201).send({
-      message: 'Registeration Successful',
+      message: 'Registration Successful',
       accessToken: request.jwt.sign(payload),
     });
   } catch (error) {

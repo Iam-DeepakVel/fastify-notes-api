@@ -1,8 +1,8 @@
-import 'dotenv/config';
 import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import userRoutes from './modules/user/user.route';
 import fastifyJwt, { JWT } from '@fastify/jwt';
 import noteRoutes from './modules/note/note.route';
+import { config } from './utils/config';
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -10,6 +10,7 @@ declare module 'fastify' {
   }
   export interface FastifyInstance {
     authenticate: any;
+    jwt: JWT;
   }
 }
 
@@ -34,7 +35,7 @@ export default function buildServer() {
   });
 
   fastify.register(fastifyJwt, {
-    secret: process.env.JWT_SECRET!,
+    secret: config.JWT_SECRET,
   });
 
   fastify.decorate(
@@ -48,13 +49,13 @@ export default function buildServer() {
     }
   );
 
-  fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
-    reply.send({ status: 'OK', port: '3100' });
-  });
-
   fastify.addHook('preHandler', (req, reply, next) => {
     req.jwt = fastify.jwt;
     return next();
+  });
+
+  fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
+    reply.send({ status: 'OK', port: '3100' });
   });
 
   fastify.register(userRoutes, { prefix: 'api/users' });
