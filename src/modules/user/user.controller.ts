@@ -36,29 +36,34 @@ export async function loginHandler(
   }>,
   reply: FastifyReply
 ) {
-  const { email, password } = request.body;
+  try {
+    const { email, password } = request.body;
 
-  const user = await findUserByEmail(email);
+    const user = await findUserByEmail(email);
 
-  if (!user) {
-    return reply.status(401).send({
-      message: 'Invalid Credentials',
-    });
+    if (!user) {
+      return reply.status(401).send({
+        message: 'Invalid Credentials',
+      });
+    }
+
+    if (!compareSync(password, user.password)) {
+      return reply.status(401).send({
+        message: 'Invalid Credentials',
+      });
+    }
+
+    const { _id, name } = user;
+
+    const payload = {
+      _id,
+      email,
+      name,
+    };
+
+    return { accessToken: request.jwt.sign(payload) };
+  } catch (error) {
+    fastify().log.error(error, 'Error Login');
+    return reply.code(500).send(error);
   }
-
-  if (!compareSync(password, user.password)) {
-    return reply.status(401).send({
-      message: 'Invalid Credentials',
-    });
-  }
-
-  const { _id, name } = user;
-
-  const payload = {
-    _id,
-    email,
-    name,
-  };
-
-  return { accessToken: request.jwt.sign(payload) };
 }
