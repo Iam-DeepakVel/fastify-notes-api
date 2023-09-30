@@ -1,16 +1,7 @@
-import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
+import { connectDB } from './db/db';
+import buildServer from './server';
 
-const fastify = Fastify({
-  logger: {
-    transport: {
-      target: 'pino-pretty',
-    },
-  },
-});
-
-fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
-  reply.send({ status: 'OK', port: '3100' });
-});
+const fastify = buildServer();
 
 // Run server
 fastify.listen({ port: 3100 }, function (err, address) {
@@ -18,5 +9,8 @@ fastify.listen({ port: 3100 }, function (err, address) {
     fastify.log.error(err);
     process.exit(1);
   }
+  // Connect to Database
+  connectDB();
+
   fastify.log.info(`Server is now listening on ${address}`);
 });
