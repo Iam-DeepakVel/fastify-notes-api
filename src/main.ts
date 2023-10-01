@@ -4,7 +4,6 @@ import buildServer from './server';
 
 const fastify = buildServer();
 
-
 // Run server
 fastify.listen({ port: 3100 }, function (err, address) {
   if (err) {

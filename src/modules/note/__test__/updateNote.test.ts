@@ -62,5 +62,4 @@ test('PUT `api/notes/update/:id` route - Update Note Successfull', async (t) => 
   );
   t.same(updatedNote.title, 'Updated title');
   t.same(updatedNote.content, 'Updated content');
-  t.end();
 });

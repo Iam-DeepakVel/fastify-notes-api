@@ -88,6 +88,5 @@ test("POST 'api/users/login' route", async () => {
 
     t.equal(response.statusCode, 401);
     t.equal(response.json().message, 'Invalid Credentials');
-    t.end();
   });
 });

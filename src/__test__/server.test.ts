@@ -23,7 +23,6 @@ test('GET `/` route', async (t) => {
         'application/json; charset=utf-8'
       );
       t.same(response.json(), { status: 'OK', port: '3100' });
-      t.end();
     }
   );
 });

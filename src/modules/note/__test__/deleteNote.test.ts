@@ -51,5 +51,4 @@ test('DELETE `api/notes/delete/:id` route - Delete Note Successfull', async (t) 
 
   t.equal(deleteNoteResponse.statusCode, 200);
   t.same(deleteNoteResponse.json().message, 'Note Deleted Successfully');
-  t.end();
 });

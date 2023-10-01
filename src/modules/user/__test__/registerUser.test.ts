@@ -29,5 +29,4 @@ test('POST `api/users/register` route - Create User Successfull', async (t) => {
   t.equal(response.headers['content-type'], 'application/json; charset=utf-8');
   t.same(response.json().message, 'Registration Successful');
   t.type(response.json().accessToken, 'string');
-  t.end();
 });

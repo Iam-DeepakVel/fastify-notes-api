@@ -49,5 +49,4 @@ test('POST `api/notes/add` route - Create Note Successfull', async (t) => {
   );
   t.same(note.title, 'Test title');
   t.same(note.content, 'Test content');
-  t.end();
 });
