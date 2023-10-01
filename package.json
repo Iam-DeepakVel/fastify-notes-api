@@ -5,12 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsnd --exit-child --transpile-only --respawn src/main.ts",
-    "test": "tap run"
+    "test": "tap run "
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@faker-js/faker": "^8.1.0",
     "@fastify/jwt": "^7.2.1",
     "@sinclair/typebox": "^0.31.17",
     "@typegoose/typegoose": "^11.5.0",
@@ -20,6 +19,7 @@
     "mongoose": "^7.5.3"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.1.0",
     "@types/bcrypt": "^5.0.0",
     "pino-pretty": "^10.2.0",
     "tap": "^18.4.0",
