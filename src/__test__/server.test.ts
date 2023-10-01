@@ -4,7 +4,7 @@ import buildServer from '../server';
 test('GET `/` route', async (t) => {
   t.plan(4);
 
-  const fastify = buildServer();
+  const fastify = await buildServer();
 
   t.teardown(() => {
     fastify.close();

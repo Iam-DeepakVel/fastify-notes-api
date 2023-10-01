@@ -1,17 +1,22 @@
-import envSchema from 'env-schema';
-import { Type, Static } from '@sinclair/typebox';
+// const schema = {
+//   type: 'object',
+//   required: ['PORT', 'MONGO_URI', 'JWT_SECRET'],
+//   properties: {
+//     PORT: {
+//       type: 'number',
+//       default: 3100,
+//     },
+//     MONGO_URI: {
+//       type: 'string',
+//     },
+//     JWT_SECRET: {
+//       type: 'string',
+//     },
+//   },
+// };
 
-const schema = Type.Object({
-  PORT: Type.Number({
-    default: 3100,
-  }),
-  JWT_SECRET: Type.String(),
-  MONGO_URI: Type.String(),
-});
-
-type Env = Static<typeof schema>;
-
-export const config = envSchema<Env>({
-  schema,
-  dotenv: true,
-});
+// export const options = {
+//   confKey: 'config',
+//   schema: schema,
+//   dotenv: true,
+// };

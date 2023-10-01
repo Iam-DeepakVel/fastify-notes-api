@@ -26,7 +26,7 @@ test('POST `api/notes/add` route - Create Note Successfull', async (t) => {
   });
 
   const { accessToken } = regiserResponse.json();
-  
+
   // create note
   const createNoteResponse = await fastify.inject({
     method: 'POST',

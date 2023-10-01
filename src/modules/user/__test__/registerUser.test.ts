@@ -17,7 +17,7 @@ test('POST `api/users/register` route - Create User Successfull', async (t) => {
     fastify.close();
     await disconnectDB();
   });
-  
+
   // Register user
   const response = await fastify.inject({
     method: 'POST',

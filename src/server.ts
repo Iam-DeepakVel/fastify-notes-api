@@ -1,8 +1,8 @@
+import 'dotenv/config';
 import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import userRoutes from './modules/user/user.route';
 import fastifyJwt, { JWT } from '@fastify/jwt';
 import noteRoutes from './modules/note/note.route';
-import { config } from './utils/config';
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -11,6 +11,11 @@ declare module 'fastify' {
   export interface FastifyInstance {
     authenticate: any;
     jwt: JWT;
+    config: {
+      MONGO_URI: string;
+      PORT: number;
+      JWT_SECRET: string;
+    };
   }
 }
 
@@ -34,8 +39,11 @@ export default function buildServer() {
     },
   });
 
+  // Load env
+  // await fastify.register(fastifyEnv, options);
+
   fastify.register(fastifyJwt, {
-    secret: config.JWT_SECRET,
+    secret: process.env.JWT_SECRET!,
   });
 
   fastify.decorate(
