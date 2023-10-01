@@ -25,4 +25,9 @@ jobs:
     - run: npm run test
       env:
         MONGO_URI: ${{ secrets.MONGO_URI }}
-        JWT_SECRET: ${{ secrets.JWT_SECRET }}  
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+    - name: Debug Test Output
+      run: |
+          cat /github/workspace/npm-debug.log
+          cat /github/workspace/npm-test.log
+      if: failure()  
