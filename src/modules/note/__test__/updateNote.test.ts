@@ -3,7 +3,7 @@ import buildServer from '../../../server';
 import { connectDB, disconnectDB } from '../../../db/db';
 import { faker } from '@faker-js/faker';
 
-test('POST `api/notes/add` route - Create Note Successfull', async (t) => {
+test('PUT `api/notes/update/:id` route - Update Note Successfull', async (t) => {
   const name = faker.person.firstName();
   const email = faker.internet.email();
   const password = faker.internet.password();
@@ -26,8 +26,8 @@ test('POST `api/notes/add` route - Create Note Successfull', async (t) => {
   });
 
   const { accessToken } = regiserResponse.json();
-  
-  // create note
+
+  // Create a note to update
   const createNoteResponse = await fastify.inject({
     method: 'POST',
     url: '/api/notes/add',
@@ -40,14 +40,27 @@ test('POST `api/notes/add` route - Create Note Successfull', async (t) => {
     },
   });
 
-  const note = createNoteResponse.json();
+  // Update note
+  const updateNoteResponse = await fastify.inject({
+    method: 'PUT',
+    url: `/api/notes/update/${createNoteResponse.json()._id}`,
+    headers: {
+      authorization: `Bearer ${accessToken}`,
+    },
+    payload: {
+      title: 'Updated title',
+      content: 'Updated content',
+    },
+  });
 
-  t.equal(createNoteResponse.statusCode, 201);
+  const updatedNote = updateNoteResponse.json();
+
+  t.equal(updateNoteResponse.statusCode, 200);
   t.equal(
-    createNoteResponse.headers['content-type'],
+    updateNoteResponse.headers['content-type'],
     'application/json; charset=utf-8'
   );
-  t.same(note.title, 'Test title');
-  t.same(note.content, 'Test content');
+  t.same(updatedNote.title, 'Updated title');
+  t.same(updatedNote.content, 'Updated content');
   t.end();
 });

@@ -3,7 +3,7 @@ import buildServer from '../../../server';
 import { connectDB, disconnectDB } from '../../../db/db';
 import { faker } from '@faker-js/faker';
 
-test('POST `api/notes/add` route - Create Note Successfull', async (t) => {
+test('DELETE `api/notes/delete/:id` route - Delete Note Successfull', async (t) => {
   const name = faker.person.firstName();
   const email = faker.internet.email();
   const password = faker.internet.password();
@@ -26,8 +26,8 @@ test('POST `api/notes/add` route - Create Note Successfull', async (t) => {
   });
 
   const { accessToken } = regiserResponse.json();
-  
-  // create note
+
+  // Create a note to delete
   const createNoteResponse = await fastify.inject({
     method: 'POST',
     url: '/api/notes/add',
@@ -40,14 +40,16 @@ test('POST `api/notes/add` route - Create Note Successfull', async (t) => {
     },
   });
 
-  const note = createNoteResponse.json();
+  // Delete note
+  const deleteNoteResponse = await fastify.inject({
+    method: 'DELETE',
+    url: `/api/notes/delete/${createNoteResponse.json()._id}`,
+    headers: {
+      authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-  t.equal(createNoteResponse.statusCode, 201);
-  t.equal(
-    createNoteResponse.headers['content-type'],
-    'application/json; charset=utf-8'
-  );
-  t.same(note.title, 'Test title');
-  t.same(note.content, 'Test content');
+  t.equal(deleteNoteResponse.statusCode, 200);
+  t.same(deleteNoteResponse.json().message, 'Note Deleted Successfully');
   t.end();
 });

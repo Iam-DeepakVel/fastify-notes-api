@@ -4,7 +4,7 @@ import buildServer from '../../../server';
 import { UserType } from '@fastify/jwt';
 import { connectDB, disconnectDB } from '../../../db/db';
 
-test("POST 'api/users/login'", async () => {
+test("POST 'api/users/login' route", async () => {
   test('given the email and password are correct', async (t) => {
     const name = faker.person.firstName();
     const email = faker.internet.email();
@@ -76,6 +76,7 @@ test("POST 'api/users/login'", async () => {
       },
     });
 
+    // Login User
     const response = await fastify.inject({
       method: 'POST',
       url: '/api/users/login',
@@ -87,5 +88,6 @@ test("POST 'api/users/login'", async () => {
 
     t.equal(response.statusCode, 401);
     t.equal(response.json().message, 'Invalid Credentials');
+    t.end();
   });
 });

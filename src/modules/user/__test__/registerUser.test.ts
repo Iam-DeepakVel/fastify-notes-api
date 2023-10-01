@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { test } from 'tap';
 import buildServer from '../../../server';
-import { UserModel } from '../user.model';
 import { connectDB, disconnectDB } from '../../../db/db';
 
 test('POST `api/users/register` route - Create User Successfull', async (t) => {
@@ -16,10 +15,10 @@ test('POST `api/users/register` route - Create User Successfull', async (t) => {
 
   t.teardown(async () => {
     fastify.close();
-    await UserModel.deleteMany({});
     await disconnectDB();
   });
-
+  
+  // Register user
   const response = await fastify.inject({
     method: 'POST',
     url: '/api/users/register',
@@ -30,4 +29,5 @@ test('POST `api/users/register` route - Create User Successfull', async (t) => {
   t.equal(response.headers['content-type'], 'application/json; charset=utf-8');
   t.same(response.json().message, 'Registration Successful');
   t.type(response.json().accessToken, 'string');
+  t.end();
 });
