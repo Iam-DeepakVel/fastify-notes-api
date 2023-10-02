@@ -39,9 +39,6 @@ export default function buildServer() {
     },
   });
 
-  // Load env
-  // await fastify.register(fastifyEnv, options);
-
   fastify.register(fastifyJwt, {
     secret: process.env.JWT_SECRET!,
   });
