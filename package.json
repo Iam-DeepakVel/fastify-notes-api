@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "dev": "tsnd --exit-child --transpile-only --respawn src/main.ts",
-    "test": "tap run"
+    "test": "tap run",
+    "build": "node esbuild.config.mjs",
+    "start": "node ./lib/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +23,8 @@
   "devDependencies": {
     "@faker-js/faker": "^8.1.0",
     "@types/bcrypt": "^5.0.0",
+    "esbuild": "^0.19.4",
+    "esbuild-node-externals": "^1.9.0",
     "pino-pretty": "^10.2.0",
     "tap": "^18.4.0",
     "ts-node-dev": "^2.0.0",

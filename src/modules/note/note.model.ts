@@ -1,19 +1,25 @@
-import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
-import { User } from '../user/user.model';
+import mongoose from 'mongoose';
 
-export class Note {
-  @prop({ required: true, ref: () => User })
-  user: Ref<User>;
-
-  @prop({ required: true })
-  title: string;
-
-  @prop({ required: true })
-  content: string;
-}
-
-export const NoteModel = getModelForClass(Note, {
-  schemaOptions: {
-    timestamps: true,
+const noteSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User', 
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
+
+
+export const NoteModel = mongoose.model('Note', noteSchema);
